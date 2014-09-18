@@ -2,6 +2,7 @@
 
 
 NodeJS implementation of Cards Against Humanity, completely in italian language.
+Take a look [HERE](http://italians-against-humanity.herokuapp.com)
 
 ##Modification
 This work is derivated from the original project [nodejs-against-humanity](https://github.com/amirrajan/nodejs-against-humanity), with few changes:
@@ -38,6 +39,9 @@ Then run the following instead of `node server.js`:
 	
 ##Known Bugs
 - If a player leaves bad things happens.
+
+##Italian text cards credits
+[https://git.eigenlab.org/ilario/cards-against-humanity-italian-translation](https://git.eigenlab.org/ilario/cards-against-humanity-italian-translation)
 
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/2.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License</a>.
