@@ -1,4 +1,4 @@
-##Italians Against Humanity
+##Italians Against Humanity [![gittip](https://img.shields.io/gittip/Ale46.svg)](https://www.gratipay.com/Ale46/)
 
 
 NodeJS implementation of Cards Against Humanity, completely in italian language.
