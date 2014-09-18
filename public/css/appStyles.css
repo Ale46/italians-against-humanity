@@ -1,0 +1,84 @@
+body { padding-top: 60px; }  
+/*.textbox {
+  background: #F1F1F1 url(../img/user.png) no-repeat;
+  background-position: 5px -7px !important;
+  padding: 10px 1px 1px 25px;
+  margin-right: 10px;
+  border: 1px solid #CCC;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+  -webkit-box-shadow: 0 1px 1px #CCC inset, 0 1px 0 #FFF;
+  box-shadow: 0 1px 1px #CCC inset, 0 1px 0 #FFF;
+}*/
+.textbox {
+  background: transparent url(../img/user.png) no-repeat;
+  background-position: 4px -8px !important;
+  padding: 10px 1px 1px 25px;
+  margin-right: 10px;
+  border: 0px #FFF;
+  color: white;
+}
+.blackCard {
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 25px;
+  color: #FFFFFF;
+  background-color: #2c2c2c;
+  padding: 20px;
+  text-align: center;
+  border-radius: 5px;
+}
+.whiteCard{
+  border-radius: 5px;
+  border-color: #2c2c2c;
+  border-width: thin;
+  border-style: solid;
+}
+
+.test1 {background-color: #269abc;}
+.test2 {background-color: #3c763d}
+
+.whiteCardItems {
+  border-top: darkgray solid 3px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+}
+
+.alert {
+  font-size: 16px;
+}
+
+.callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+
+.callout-orange {
+  border-left-color: #f0ad4e;
+}
+
+.callout h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.callout-green {
+  border-left-color: #3c763d;
+}
+
+#chat{
+  display:none;
+  float:right;
+  width:300px;
+  height:95px;
+  overflow: auto;
+  overflow:scroll-y;
+  padding:10px;
+  margin-top: 10px;
+}

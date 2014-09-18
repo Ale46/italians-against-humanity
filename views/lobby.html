@@ -1,0 +1,39 @@
+
+<div class="callout callout-orange alert-dismissible" style="text-align: justify;">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<h4>Regole del Gioco</h4>
+Per iniziare il gioco, ogni giocatore pesca dieci Carte Bianche.
+Un giocatore a caso assume il ruolo di Re delle Carte e gioca una Carta Nera. 
+Tutti gli altri giocatori rispondono alla domanda o completano la frase passando al Re una Carta
+Bianca.
+Il Re sceglie la sua risposta
+preferita ed il giocatore che ha giocato quella particolare risposta riceve dal Re la Carta Nera, che
+vale come Punto Fighezza.
+Al termine della mano, il giocatore successivo diventa il Re delle Carte ed ogni giocatore pesca dal
+mazzo tante carte quante sono necessarie per ritornare ad avere dieci carte in mano.
+<br/>
+Alcune Carte Nere riportano due spazi per le risposte.
+Per rispondere o completare queste carte, ogni giocatore utilizzerà due Carte Bianche. L'ordine
+è importante: giocale nell'ordine in cui il Re delle Carte dovrebbe leggerle.
+Vince chi arriva prima al punteggio stabilito.
+</div>
+
+<div class="callout callout-green" style="text-align: justify;">
+<h4>Come Giocare su Italians Against Humanity</h4>
+<ul>
+  <li>Hai bisogno di almeno 3 giocatori per giocare.</li>
+  <li>Crea una Nuova Partita oppure entra in una di quelle già disponibili.</li>
+  <li>Scegli bene le carte da giocare, non potrai più cambiarle</li>
+</ul>
+</div>
+<!-- <hr /> -->
+<div class="row" id="availableGames" >
+  <div class="col-lg-10">
+    <strong id="noGames" ng-show="availableGames.length == 0">Nessuna partita disponibile.. Creane una tu cliccando su Nuova partita.</strong>
+    <div ng-repeat="game in availableGames" class="well">
+      <button ng-click="joinGame(game.id)" ng-show="!game.isStarted" type="button" class="btn btn-primary" style="margin-right: 10px;">Entra in partita</button>
+      <button ng-click="spectateGame(game.id)" type="button" class="btn btn-secondary" style="margin-right: 10px;">Assisti</button>
+      <span style="font-size: larger">{{game.name}} - {{game.players}} giocatori di {{game.maxPlayers}} (Min. Players {{game.minPlayers}}) - Espansioni: {{game.extensions}}</span>
+    </div>
+  </div>
+</div>

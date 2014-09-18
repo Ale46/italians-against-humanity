@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" ng-app="myApp" ng-controller="HomeCtrl">
+<head>
+  <meta charset="utf-8">
+  <title>Italians Against Humanity</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Le styles -->
+  <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/public/css/appStyles.css" rel="stylesheet">
+  <link href="/public/css/bootstrap-dialog.min.css" rel="stylesheet">
+</head>
+<body data-ng-init="launch('create')">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#humanity-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Italians Against Humanity</a>
+    </div>
+    <div class="navbar-collapse collapse" id="humanity-navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li id="aCreatGame" ng-show="inLobby"><a href="" onclick="createNewGame()">Nuova Partita</a></li>
+      </ul>
+
+      <form ng-show="inLobby" class="navbar-form navbar-right" role="search">
+              <div class="form-group">
+                <input type="text" class="textbox" id="nickname" ng-model="gameSvc.playerName" readonly>
+              </div>
+            </form>
+    </div>
+  </nav>
+  <div class="container">
+    <div style="margin-left: 15px; margin-right: 15px;" ng-view></div>
+
+    <br/>
+    <br/>
+    <br/>
+    <div class="row" style="border: solid 1px silver; padding: 10px; margin: 10px;">
+      <div class="col-sm-2">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/">
+          <img alt="Creative Commons License" style="display: block; margin-left: auto; margin-right: auto;" src="public/img/cc.png" /></a>
+        </div>
+        <div class="col-sm-10">
+          <small>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons Attribution-NonCommercial-ShareAlike 2.0 Generic License</a>.</small>
+          <br />
+          <small>This site is not affliated in any way with the official Cards Against Humanities.</small>
+          <br/>
+          <a href="https://github.com/Ale46/italians-against-humanity">The source is here.</a>.
+          <div>Based on: <a href="https://github.com/amirrajan/nodejs-against-humanity">NodeJS against humanity</a></div> 
+          <div>Ultima Versione:&nbsp;<span app-version></span></div>
+        </div>
+      </div>
+    </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js" type="text/javascript"></script>
+  <script src="public/lib/angular/angular-resource.min.js" type="text/javascript"></script>
+  <script src="public/lib/angular/angular-route.min.js" type="text/javascript"></script>
+  <script src="public/lib/angular/angular-sanitize.min.js" type="text/javascript"></script>
+  <script src="public/js/app/angular_app.js" type="text/javascript"></script>
+  <script src="public/js/app/services.js" type="text/javascript"></script>
+  <script src="public/js/app/controllers.js" type="text/javascript"></script>
+  <script src="public/js/app/filters.js" type="text/javascript"></script>
+
+  <script src="public/js/app/directives.js" type="text/javascript"></script>
+  <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js" type="text/javascript"></script>
+  <script src="/public/lib/bootstrap-dialog.min.js" type="text/javascript"></script>
+  <script src="/public/lib/jquery.cookie-1.4.1.min.js" type="text/javascript"></script>
+  <script src="/public/lib/underscore.js" type="text/javascript"></script>
+  <script src="/public/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+
+
+  <script type="text/javascript">
+  function counter($el, n) {
+      (function loop() {
+         $el.html(n);
+         if (n--) {
+             setTimeout(loop, 1000);
+         }
+      })();
+  } 
+  function sendMessage(){
+    socket.emit('chat', $("input#msg").val() );
+    $("p#data_recieved").append("<br />\r\n" + name + ': ' + $("input#msg").val());
+    $("input#msg").val('');
+  }
+  
+  function onReadyClick(){
+     $('#submit').prop('disabled', 'true');
+     setTimeout(function() { angular.element(document.getElementById('submit')).scope().readyForNextRound(); }, 10000);
+     $('#notificationRoundComplete').html('Il round partirà fra <span id="count">10</span> secondi');
+     counter($('#count'), 10);
+   }
+
+   function createNewGame(){
+    BootstrapDialog.show({
+      title: 'Configura opzioni partita',
+      message: '<label for="name">Seleziona Deck da usare</label> \
+                <div class="checkbox">\
+                <label><input name="ch" type="checkbox" value="base" checked>Deck Base</label>\
+                </div>\
+                <div class="checkbox">\
+                <label><input name="ch" type="checkbox" value="ext1">Espansione 1</label>\
+                </div> \
+                <label for="name">Seleziona numero giocatori minimo</label>\
+                  <select class="form-control" id="minPlayers">\
+                   <option>3</option>\
+                   <option>4</option>\
+                   <option>5</option>\
+                   <option>6</option>\
+                   <option>7</option>\
+                   <option>8</option>\
+                   <option>9</option>\
+                   <option>10</option>\
+                  </select>\
+                <label for="name">Seleziona numero giocatori massimo</label>\
+                  <select class="form-control" id="maxPlayers">\
+                    <option>3</option>\
+                    <option>4</option>\
+                    <option>5</option>\
+                    <option>6</option>\
+                    <option>7</option>\
+                    <option>8</option>\
+                    <option>9</option>\
+                    <option>10</option>\
+                  </select>\
+                  <label for="name">Seleziona punti da raggiungere</label>\
+                    <select class="form-control" id="pointsToWin">\
+                      <option>5</option>\
+                      <option>6</option>\
+                      <option>7</option>\
+                      <option>8</option>\
+                      <option>9</option>\
+                      <option>10</option>\
+                    </select>\
+                  ',
+       buttons: [{
+         label: 'Ok',
+         action: function(dialogItself){
+          //var minPlayer = $("input#")
+          
+          var extensions = ($("input[name=ch]:checked").map(function () {return this.value;}).get().join(","));
+
+          var minPlayers = parseInt($('#minPlayers').val());
+          var maxPlayers = parseInt($('#maxPlayers').val());
+          var pointsToWin = parseInt($('#pointsToWin').val());
+          if (minPlayers > maxPlayers){
+            BootstrapDialog.show({
+              type: BootstrapDialog.TYPE_WARNING,
+              title: 'Attenzione..',
+              message: 'Numero giocatori minimi superiori a quello massimo.. Inizi con il giusto grado di ignoranza.',
+              buttons: [{
+                  label: 'Banana.',
+                  action: function(df){
+                    df.close();
+                  }
+              }]
+          });     
+
+            return;
+          }
+
+          if (extensions.length === 0){
+              BootstrapDialog.show({
+                type: BootstrapDialog.TYPE_WARNING,
+                title: 'Attenzione..',
+                message: 'Devi selezionare almeno un deck con cui giocare.',
+                buttons: [{
+                    label: 'Ok.',
+                    action: function(df){
+                      df.close();
+                    }
+                }]
+            });     
+
+              return;
+          }
+
+          angular.element(document.getElementById('aCreatGame')).scope().createGame(extensions, minPlayers, maxPlayers, pointsToWin);
+          dialogItself.close();
+        }
+      }]
+    });
+   }
+  </script>
+
+  <script type="text/javascript">
+  jQuery(document).ready(function($) {
+    
+   var input = $('input');
+    if (typeof $.cookie("nick") === "undefined"){
+
+
+      BootstrapDialog.show({
+        title: 'Scelta nickname',
+        message: '<div class="input-group">  <span class="input-group-addon">@</span><input type="text" class="form-control" id="nickInput" placeholder="Username"></div>',
+         buttons: [{
+           label: 'Ok',
+           action: function(dialogItself){
+            input.val($('#nickInput').val());
+            angular.element($('#nickname')).triggerHandler('input');
+            $.cookie("nick", $('#nickInput').val(), { expires: 7 });
+            dialogItself.close();
+          }
+        }]
+      });
+    }else{
+     input.val($.cookie("nick"));
+     angular.element($('#nickname')).triggerHandler('input');
+   }
+ });
+</script>
+
+<script type="text/javascript">
+  var socket = io.connect(window.location.hostname);
+  var current_room = "";
+  // on connection to server, ask for user's name with an anonymous callback
+  socket.on('connect', function(){
+    // call the server-side function 'adduser' and send one parameter (value of prompt)
+    socket.emit('adduser', $.cookie("nick"));
+  });
+
+  // listener, whenever the server emits 'updatechat', this updates the chat body
+  socket.on('updatechat', function (username, data) {
+    $('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+    $('#chat').scrollTop($("#chat")[0].scrollHeight);
+  });
+
+  function switchRoom(room){
+    if (current_room !== room){
+      socket.emit('switchRoom', room);
+      current_room = room;
+    }
+    
+  }
+  
+  function joinGameChat(room){
+    switchRoom(room);
+    $('#chat').show();
+    $('#enableChat').hide();
+  }
+
+  // when the client clicks SEND
+  function sendMessage() {
+    
+    var message = $('#data').val();
+    $('#data').val('');
+    // tell server to execute 'sendchat' and send along one parameter
+    socket.emit('sendchat', message);
+  }
+
+</script>
+
+</body>
+
+</html>

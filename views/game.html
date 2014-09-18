@@ -1,0 +1,115 @@
+
+<div class="row" ng-show="!!gameError">
+  <div class="alert alert-danger">
+    {{gameError}}
+  </div>
+</div>
+
+
+<div class="callout callout-green alert-dismissible" id="chatCallout" style="text-align: justify;">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+Vuoi comunicare con gli altri giocatori? 
+<input type="button" id="enableChat" value="Abilita Chat" onclick="joinGameChat(document.getElementById('hostID').innerHTML.trim());$('#chatCallout').hide();" />
+</div>
+<div id="chat">
+  <div id="conversation"></div>
+  <form onsubmit="sendMessage()" action="javascript:void(0);">
+      <input type="text" id="data" placeholder="scrivi messaggio.." style="-moz-border-radius: 5px;border-radius: 5px;padding:1px;" />
+      <input type="button" id="datasend" onclick="sendMessage();" value="Invia"/>
+  </form>
+</div>
+
+
+<div class="row">
+  <h1 id="gameName">{{game.name}}</h1>
+  <h4 id="hostID" style="display:none;">{{game.hostId}}</h4>
+  <small ng-show="game.minPlayers > game.players.length"> (aspetto altri giocatori)</small>
+  <hr/>
+</div>
+<div id="notificationWaitingOnRound" ng-show="!game.isStarted  && game.hostId !== currentPlayer.id && game.minPlayers <= game.players.length" class="center row alert alert-warning">Numero minino raggiunto! Aspettiamo il via della partita</div>
+<div id="notificationWaitingOnRound" ng-show="!game.isStarted  && game.hostId === currentPlayer.id && game.minPlayers <= game.players.length" class="center row alert alert-warning">Numero minino raggiunto! Dai il via alla partita</div>
+<div class="row blackCard" ng-show="game.isStarted">
+  {{game.currentBlackCard}}
+</div>
+<br>
+<div id="notificationCardCzar" ng-show="currentPlayer.isCzar" class="row alert alert-info center">Tu sei il Card Czar.</div>
+<div id="notificationSelectCard" ng-show="showNotificationSelectCard()" class="row alert alert-success center">Scegli una carta da giocare.</div>
+<div id="notificationWaitingOnCzar" ng-show="showNotificationWaitingOnCzar()" class="row alert alert-warning center">Aspettiamo che il Card Czar scelga un vincitore.</div>
+<div id="notificationWaitingOnCards" ng-show="showNotificationWaitingOnCards() && currentPlayer.isReady" class="row alert alert-warning center">Aspettiamo la scelta degli altri giocatori..</div>
+<div id="notificationSelectWinner" ng-show="showNotificationSelectWinner()" class="row alert alert-success center">Scegli la carta vincitrice.</div>
+<div class="row" ng-show="showWhiteCardList()">
+  <table id="whiteCards" class="table">
+    <tbody id="whiteCardSelection">
+      <tr ng-repeat="whiteCard in currentPlayer.cards">
+        <td>
+          <button class="btn btn-default" ng-class="getButtonClass(whiteCard)" ng-click="selectCard(whiteCard)">{{getButtonText(whiteCard)}}</button>
+        </td>
+        <td class="col-lg-10 col-md-10" style="font-size: 16px; font-weight: bold; line-height: 25px;">{{whiteCard}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row" ng-show="showSelectedWhiteCardList()">
+  <table id="selectedWhiteCards" class="table">
+    <tbody>
+      <tr ng-repeat="player in game.players | filter:whiteCardNonNull" ng-class="getWinningCardClass(player.selectedWhiteCards)">
+        <td>
+          <button class="btn btn-default" ng-show="!game.isReadyForReview" ng-click="selectWinner(player.selectedWhiteCards)">Seleziona</button>
+          <span ng-show="game.isReadyForReview">{{player.name}}</span>
+        </td>
+        <td class="col-lg-10 col-md-10" style="font-size: 16px; font-weight: bold; line-height: 25px;"><span ng-show="game.winningCards === player.selectedWhiteCards">Vincitore: &nbsp;</span><span class="col-sm-3 whiteCard " ng-repeat="card in player.selectedWhiteCards">{{card}}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div id="notificationRoundComplete" ng-show="game.isReadyForReview &&  currentPlayer.isCzar" class="row alert alert-info center">Vincitore decretato, fai partire il prossimo round</div>
+<div id="notificationRoundComplete" ng-show="game.isReadyForReview &&  !currentPlayer.isCzar" class="row alert alert-info center">Aspettiamo che il Czar sia pronto</div>
+<div id="buttonStartGame" ng-show="!game.isStarted && game.hostId === currentPlayer.id && game.minPlayers <= game.players.length" class="row">
+  <button ng-click="startGame()" class="btn btn-lg btn-primary btn-block">Inizia la Partita</button>
+</div>
+
+<div id="buttonNextRound" ng-show="game.isReadyForReview && (!currentPlayer.isReady)" class="row">
+  <button onclick="onReadyClick()" ng-show="!game.isOver" class="btn btn-lg btn-primary btn-block" id="submit">Pronto</button>
+  <button ng-click="readyForNextRound()" ng-show="game.isOver" class="btn btn-lg btn-primary btn-block">Inizia Nuova Partita</button>
+</div>
+<br/>
+<!-- <div class="row">
+  <h4>Round Progress</h4>
+  <div class="progress">
+    <div id="gameProgress" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" ng-style="progStyle">
+    </div>
+  </div>
+  <table id="roundSummary" class="table">
+    <tbody id="roundSummaryEntries">
+    </tbody>
+  </table>
+</div> -->
+
+<div id="points" class="row" ng-show="game.isStarted">
+  <div class="well" style="font-size: 20px">Il tuo fantastico punteggio: <span id="pointsValue">{{currentPlayer.awesomePoints}}</span></div>
+</div>
+<div id="roundPlayers" class="row"> </div>
+<h4>Players - Punteggio per la vittoria <b>{{game.pointsToWin}}</b></h4>
+<div id="roundHistory" class="row">
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="player in game.players">
+    <span class="badge pull-left">{{player.awesomePoints}}</span>
+    &nbsp;&nbsp;{{player.name}}
+    <span class="pull-right">{{getPlayerStatus(player)}}</span>
+    </li>
+  </ul>
+</div>
+
+
+
+<div ng-show="game.isStarted">
+  <h4>Vincitori dei Round</h4>
+  <div id="rountWinners" class="row">
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="item in game.history">
+      <span class="text-success">{{item.winner}}:&nbsp;</span>
+      <span ng-bind-html="buildWinningText(item)"></span>
+      </li>
+    </ul>
+  </div>
+</div>
