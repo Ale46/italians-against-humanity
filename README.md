@@ -16,6 +16,7 @@ This work is derivated from the original project [nodejs-against-humanity](https
 - Wait time between rounds
 - Ingame chat
 - Small fixes and tweaks
+
 ##Run Locally
 
 Install all the dependencies:
