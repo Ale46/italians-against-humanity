@@ -189,30 +189,47 @@
   </script>
 
   <script type="text/javascript">
-  jQuery(document).ready(function($) {
-    
-   var input = $('input');
-    if (typeof $.cookie("nick") === "undefined"){
+   jQuery(document).ready(function($) {
+     
+    var input = $('input');
+     if (typeof $.cookie("nick") === "undefined"){
 
 
-      BootstrapDialog.show({
-        title: 'Scelta nickname',
-        message: '<div class="input-group">  <span class="input-group-addon">@</span><input type="text" class="form-control" id="nickInput" placeholder="Username"></div>',
-         buttons: [{
-           label: 'Ok',
-           action: function(dialogItself){
-            input.val($('#nickInput').val());
-            angular.element($('#nickname')).triggerHandler('input');
-            $.cookie("nick", $('#nickInput').val(), { expires: 7 });
-            dialogItself.close();
-          }
-        }]
-      });
-    }else{
-     input.val($.cookie("nick"));
-     angular.element($('#nickname')).triggerHandler('input');
-   }
- });
+       BootstrapDialog.show({
+         title: 'Scelta nickname',
+         message: '<div class="input-group">  <span class="input-group-addon">@</span><input type="text" class="form-control" id="nickInput" placeholder="Username"></div>',
+         closable: false,
+         closeByBackdrop: false,
+         closeByKeyboard: false,
+          buttons: [{
+            label: 'Ok',
+            action: function(dialogItself){
+             if ($('#nickInput').val() == ''){
+                 BootstrapDialog.show({
+                   type: BootstrapDialog.TYPE_WARNING,
+                   title: 'Attenzione..',
+                   message: 'Non puoi inserire un nick vuoto',
+                   buttons: [{
+                       label: 'Ok.',
+                       action: function(df){
+                         df.close();
+                       }
+                   }]
+               });     
+             }else{
+               input.val($('#nickInput').val());
+               angular.element($('#nickname')).triggerHandler('input');
+               $.cookie("nick", $('#nickInput').val(), { expires: 7 });
+               dialogItself.close();
+             }
+           }
+         }]
+       });
+     }else{
+      input.val($.cookie("nick"));
+      angular.element($('#nickname')).triggerHandler('input');
+    }
+  });
 </script>
 
 <script type="text/javascript">
