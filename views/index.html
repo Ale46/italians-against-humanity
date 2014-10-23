@@ -235,10 +235,11 @@
 <script type="text/javascript">
   var socket = io.connect(window.location.hostname);
   var current_room = "";
+  var username = $.cookie("nick");
   // on connection to server, ask for user's name with an anonymous callback
   socket.on('connect', function(){
     // call the server-side function 'adduser' and send one parameter (value of prompt)
-    socket.emit('adduser', $.cookie("nick"));
+    socket.emit('adduser', username);
   });
 
   // listener, whenever the server emits 'updatechat', this updates the chat body
