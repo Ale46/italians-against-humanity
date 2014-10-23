@@ -9,7 +9,7 @@ This work is derivated from the original project [nodejs-against-humanity](https
 
 
 - All the cards are in italian language
-- Three choice black cards and specate mode (partial code from [this fork](https://github.com/pdrasko/nodejs-against-humanity)) 
+- Three choice black cards and spectate mode (partial code from [this fork](https://github.com/pdrasko/nodejs-against-humanity)) 
 - Form to choice nickname with cookie support
 - Dirty (on code side) extensions support
 - Form where you can define game options (points to win, min player, max players, extensions to use)
