@@ -1,10 +1,10 @@
-##Italians Against Humanity [![gittip](https://img.shields.io/gittip/Ale46.svg)](https://www.gratipay.com/Ale46/)
+## Italians Against Humanity [![gittip](https://img.shields.io/gittip/Ale46.svg)](https://www.gratipay.com/Ale46/)
 
 
 NodeJS implementation of Cards Against Humanity, completely in italian language.
 Take a look [HERE](http://italians-against-humanity.herokuapp.com)
 
-##Modification
+## Modification
 This work is derivated from the original project [nodejs-against-humanity](https://github.com/amirrajan/nodejs-against-humanity), with few changes:
 
 
@@ -17,7 +17,7 @@ This work is derivated from the original project [nodejs-against-humanity](https
 - Ingame chat
 - Small fixes and tweaks
 
-##Run Locally
+## Run Locally
 
 Install all the dependencies:
 
@@ -38,10 +38,10 @@ Then run the following instead of `node server.js`:
 
     nodemon server.js
 	
-##Known Bugs
+## Known Bugs
 - If a player leaves bad things happens.
 
-##Italian text cards credits
+## Italian text cards credits
 [https://git.eigenlab.org/ilario/cards-against-humanity-italian-translation](https://git.eigenlab.org/ilario/cards-against-humanity-italian-translation)
 
 
